@@ -1,4 +1,6 @@
+//
 // ------------------ Coloring.cpp -----------------------
+//
 #include "Coloring.h"
 
 Coloring::Coloring(const Graph& g)
@@ -47,7 +49,10 @@ pair<Vertex*, list<int> > Coloring::pickVertToColor()
 			bestIter = mapIter;
 	}
 	
-	pair<Vertex*, list<int> > result = pair<Vertex*, list<int> >((*bestIter).first, (*bestIter).second);
+	pair<Vertex*, list<int> > result = pair<Vertex*, list<int> >(
+			(*bestIter).first, (*bestIter).second
+	);
+	
 	return result;
 }
 

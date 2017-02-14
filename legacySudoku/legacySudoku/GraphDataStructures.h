@@ -9,6 +9,11 @@ class Vertex;
 
 
 /////////////////////////////////////////////////////////
+// Edge
+//
+// directed edge defined by the two vertices that it connects
+//
+/////////////////////////////////////////////////////////
 class Edge {
 public:
 	Edge(Vertex* firstVert, Vertex* secondVert)
@@ -16,10 +21,15 @@ public:
 	{}
 	
 // data
+// the edge connects _firstVert and _secondVert
+//
 	Vertex* _firstVert;
 	Vertex* _secondVert;
 };
 
+/////////////////////////////////////////////////////////
+// AdjEntry
+//
 /////////////////////////////////////////////////////////
 struct AdjEntry {
     Vertex* _neighbor;
@@ -27,6 +37,11 @@ struct AdjEntry {
     list<AdjEntry>::iterator _reverseEdge;
 };
 
+/////////////////////////////////////////////////////////
+// VertAdjList
+//
+// list of all vertices connected to _center
+//
 /////////////////////////////////////////////////////////
 class VertAdjList {
 public:
@@ -47,6 +62,12 @@ private:
 ostream& operator << (ostream& os, VertAdjList& v);
 
 
+/////////////////////////////////////////////////////////
+// Vertex
+//
+// a vertex, which has an adjacency list so we can see
+// all the other vertices to which it is connected
+//
 /////////////////////////////////////////////////////////
 class Vertex {
 public:

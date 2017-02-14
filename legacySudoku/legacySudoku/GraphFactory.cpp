@@ -1,18 +1,25 @@
+//
 // -------------------- GraphFactory.cpp ---------------------------
+//
+
 #include "GraphFactory.h"
 
 #include <fstream>
 #include <iostream>
 using namespace std;
 
-GraphFactory::GraphFactory(bool loadSudokuDatabase)
+GraphFactory::GraphFactory(bool loadSudokuDatabase, char dataPath[])
 {
 	if(!loadSudokuDatabase)
 		return;
-		
+	if(!dataPath)
+		return;
+	if(strlen(dataPath) < 1 || strlen(dataPath) > 4096)
+		return;
+	
 	// prepare the file
 	ifstream in;
-	in.open("evenMoreConsistent.txt", ifstream::in);
+	in.open(dataPath, ifstream::in);
 	// FIXME probly should set an error here someplace
 	if(!in.is_open())
 		return;
@@ -210,8 +217,10 @@ Graph GraphFactory::createSudokuGraph(int listIdx, string* difficulty)
 			else if(	(int)((float)i_div/f_box + 1.0f)
 					==	(int)((float)j_div/f_box + 1.0f)
 				&&		(int)((float)i_mod/f_box + 1.0f)
-					==	(int)((float)j_mod/f_box + 1.0f))
+					==	(int)((float)j_mod/f_box + 1.0f)
+			) {
 				g.addEdge(i,j);
+			}
 		}
 	return g;
 }

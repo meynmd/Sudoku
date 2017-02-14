@@ -1,4 +1,6 @@
+//
 // -------------------- Graph.cpp ---------------------------
+//
 #include "Graph.h"
 
 #include <time.h>
@@ -39,6 +41,12 @@ void Graph::addEdge(Vertex* firstVert, Vertex* secondVert)
 	secondList.linkUp(&firstList);
 }
 
+/////////////////////////////////////////////////////////
+//
+// nineColorCompletion
+//
+// solve the coloring problem
+//
 pair<int, bool> Graph::nineColorCompletion(bool printSolution, bool printProcess)
 {
 	Coloring partialColoring(*this);
@@ -54,9 +62,15 @@ pair<int, bool> Graph::nineColorCompletion(bool printSolution, bool printProcess
 	list<int>::iterator listIter = currColorList.begin();
 	for(; listIter != currColorList.end(); ++listIter)
 	{				
-		success = nineColorCompletionHelper(&backtracks, partialColoring, currVert, (*listIter), printProcess);
+		success = nineColorCompletionHelper(
+					&backtracks,
+					partialColoring,
+					currVert,
+					(*listIter),
+					printProcess);
 		if(success)	
 			break;
+		
 		++backtracks;
 	}
 	
@@ -80,7 +94,12 @@ pair<int, bool> Graph::nineColorCompletion(bool printSolution, bool printProcess
 	return pair<int, bool>(backtracks, success);
 }
 
-bool Graph::nineColorCompletionHelper(int* backtracks, Coloring partialColoring, Vertex* lastColoredVert, int lastColor, bool printProcess)
+bool Graph::nineColorCompletionHelper(
+										int* backtracks,
+										Coloring partialColoring,
+										Vertex* lastColoredVert,
+										int lastColor,
+										bool printProcess)
 {	
 	if(!partialColoring.assignColor(lastColoredVert, lastColor))
 		return false;

@@ -9,7 +9,7 @@ void singleTestSudoku()
 {
 	string difficulty = "";
 	int singleTestIdx = 12;
-	GraphFactory factory(true);
+	GraphFactory factory(true, (char[]){ "evenMoreConsistent.txt" });
 	Graph g = factory.createSudokuGraph(singleTestIdx, &difficulty);
 	cout << g;
 	
@@ -30,7 +30,7 @@ void singleTestSudoku()
 
 void multiTestSudoku()
 {
-	GraphFactory factory(true);
+	GraphFactory factory(true, (char[]){ "evenMoreConsistent.txt" });
 	int numSudokus = factory.getNumSudokus();
 	for(int i = 0; i < numSudokus; ++i)
 	{
