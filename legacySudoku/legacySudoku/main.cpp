@@ -1,4 +1,6 @@
+//
 // ---------------- main.cpp ---------------------
+//
 #include <iostream>
 #include <ctime>
 using namespace std;
@@ -9,19 +11,25 @@ void singleTestSudoku()
 {
 	string difficulty = "";
 	int singleTestIdx = 12;
+	
+	// initialize factory with our sudoku problems
 	GraphFactory factory(true, (char[]){ "evenMoreConsistent.txt" });
+	
+	// this will initialize a graph with edges between nodes that must be different
 	Graph g = factory.createSudokuGraph(singleTestIdx, &difficulty);
 	cout << g;
 	
 	bool printSolution = true;
     bool printProcess = true;
+	
+	// let's solve this!
 	pair<int, bool> results = g.nineColorCompletion(printSolution, printProcess);
 	
 	cout << singleTestIdx+1 << "\t" << difficulty << "\t" << results.first << "\t";
 	if(results.second)
 		cout << "Success!" << endl;
 	else
-		cout << "*Failure!" << endl;
+		cout << "* Failure! *" << endl;
 	
     //FIXME print instead?
 	//LayoutMgr::layoutGrid(g, 9, 9, .3);

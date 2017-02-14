@@ -47,6 +47,7 @@ void Graph::addEdge(Vertex* firstVert, Vertex* secondVert)
 //
 // solve the coloring problem
 //
+/////////////////////////////////////////////////////////
 pair<int, bool> Graph::nineColorCompletion(bool printSolution, bool printProcess)
 {
 	Coloring partialColoring(*this);
