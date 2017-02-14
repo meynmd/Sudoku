@@ -6,9 +6,18 @@
 #include <vector>
 using namespace std;
 
+
+/////////////////////////////////////////////////////////
+//
+// GraphFactory
+//
+// a factory for creating graphs of various types
+//
+/////////////////////////////////////////////////////////
 class GraphFactory {
 public:
-	GraphFactory(bool loadSudokuDatabase);
+	//GraphFactory(bool loadSudokuDatabase);
+	GraphFactory(bool loadSudokuDatabase, char dataPath[]);
 	Graph createRandomTree(int numVertices);
 	Graph createPathGraph(int numVertices);
 	Graph createRandomCycleGraph(int numVertices);

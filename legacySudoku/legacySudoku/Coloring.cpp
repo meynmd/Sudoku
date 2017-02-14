@@ -1,4 +1,6 @@
+//
 // ------------------ Coloring.cpp -----------------------
+//
 #include "Coloring.h"
 
 Coloring::Coloring(const Graph& g)
@@ -47,12 +49,22 @@ pair<Vertex*, list<int> > Coloring::pickVertToColor()
 			bestIter = mapIter;
 	}
 	
-	pair<Vertex*, list<int> > result = pair<Vertex*, list<int> >((*bestIter).first, (*bestIter).second);
+	pair<Vertex*, list<int> > result = pair<Vertex*, list<int> >(
+			(*bestIter).first, (*bestIter).second
+	);
+	
 	return result;
 }
 
 bool Coloring::assignColor(Vertex* vert, int color)
 {
+    
+     // RULE 3 To implement this, we want to compute set difference of
+    // domain HERE - UNION of neighbors by each constraint type.
+    // To implement this, we will need to label edges with column, box, row constraint type
+    // We need to be able to union domains, and set difference, and intersect
+
+    
 	// actually change the graph model
 	vert->_color = color;
 	
@@ -69,9 +81,29 @@ bool Coloring::assignColor(Vertex* vert, int color)
 		// only check lists of vertices which are uncolored
 		if(neighborVert->_color == 0)
 		{
+            // RULE 1 is happening here
 			// remove the color from the potential colors list
 			_toColor[neighborVert].remove(color);
-			
+
+            // RULE 2 goes here, if size == 1, assign
+            if(_toColor[neighborVert].size() == 1)
+                if(!assignColor(neighborVert,_toColor[neighborVert].front()))
+                    return false;
+            
+            // RULE 3 goes here, we can reason by process of elimination that a variable is bound by its context
+            list<int> boxDomainsU = boxConstraintUnion(neighborVert);
+            list<int> rowDomainsU = rowConstraintUnion(neighborVert);
+            list<int> colDomainsU = colConstraintUnion(neighborVert);
+            list<int> boxRemainingColors = setDifference(_toColor[neighborVert], boxDomainsU);
+            list<int> rowRemainingColors = setDifference(_toColor[neighborVert], rowDomainsU);
+            list<int> colRemainingColors = setDifference(_toColor[neighborVert], colDomainsU);
+            list<int> finalRemainingColors = intersectDomains(boxRemainingColors, intersectDomains(rowRemainingColors, colRemainingColors));
+            if(finalRemainingColors.empty())
+                return false;
+            if(finalRemainingColors.size() == 1)
+                if(!assignColor(neighborVert, finalRemainingColors.front()))
+                    return false;
+            
 			// if we just removed the last potential color, 
 			// the neighbor is now not colorable. A contradiciton has been found
 			if(_toColor[neighborVert].empty())
@@ -80,6 +112,34 @@ bool Coloring::assignColor(Vertex* vert, int color)
 	}
 	// the assignment completed successfully.
 	return true;
+}
+
+list<int> Coloring::boxConstraintUnion(Vertex* v)
+{
+    //FIXME write this function
+    return list<int>();
+}
+list<int> Coloring::rowConstraintUnion(Vertex* v)
+{
+    //FIXME write this function
+    return list<int>();
+}
+list<int> Coloring::colConstraintUnion(Vertex* v)
+{
+    //FIXME write this function
+    return list<int>();
+}
+
+list<int> Coloring::intersectDomains(const list<int>& domainA, const list<int>& domainB)
+{
+    //FIXME write this function
+    return list<int>();
+}
+
+list<int> Coloring::setDifference(const list<int>& domainA, const list<int>& domainB)
+{
+    //FIXME write this function
+    return list<int>();
 }
 
 ostream& operator << (ostream& os, Coloring& c)

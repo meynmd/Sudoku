@@ -10,6 +10,14 @@ using namespace std;
 class GraphFactory;
 class Coloring;
 
+
+/////////////////////////////////////////////////////////
+// Graph
+//
+// a graph, represented as a set of vertices and as a set
+// of edges
+//
+/////////////////////////////////////////////////////////
 class Graph {
 public:
 	Graph() {}
@@ -23,14 +31,19 @@ public:
 	
 private:
 	void addVertex(int label);
-	void addEdge(int firstVertIdx, int secondVertIdx);
-	void addEdge(Vertex* firstVert, Vertex* secondVert);
+	void addEdge(int firstVertIdx, int secondVertIdx, ConstraintType constraint);
+	void addEdge(Vertex* firstVert, Vertex* secondVert, ConstraintType constraint);
 	
 	vector<vector<Vertex*> > DFS();
 	void DFSHelper(	Vertex* currLoc, vector<Vertex*>& disconnectedVerts,
 					vector<Vertex*>& currComponent);
 					
-	bool nineColorCompletionHelper(int* backtracks, Coloring partialColoring, Vertex* lastColoredVert, int lastColor, bool printProcess);
+	bool nineColorCompletionHelper(
+									int* backtracks,
+									Coloring partialColoring,
+									Vertex* lastColoredVert,
+									int lastColor,
+									bool printProcess);
 
 // data
 	vector<Vertex*> _vertexSet;

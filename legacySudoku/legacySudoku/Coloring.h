@@ -16,6 +16,15 @@ public:
 	
 	pair<Vertex*, list<int> > pickVertToColor();
 	bool assignColor(Vertex* vert, int color);
+    
+    list<int> boxConstraintUnion(Vertex* v);
+    list<int> rowConstraintUnion(Vertex* v);
+    list<int> colConstraintUnion(Vertex* v);
+    
+    list<int> intersectDomains(const list<int>& domainA, const list<int>& domainB);
+    
+    list<int> setDifference(const list<int>& domainA, const list<int>& domainB);
+
 
 private:
 	map<Vertex*, list<int> > _toColor;

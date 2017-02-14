@@ -7,19 +7,38 @@ using namespace std;
 
 class Vertex;
 
+enum ConstraintType {
+    CONSTRAINT_ROW = 0,
+    CONSTRAINT_COL,
+    CONSTRAINT_BOX,
+    CONSTRAINT_BOX_AND_ROW,
+    CONSTRAINT_BOX_AND_COL
+};
 
+
+/////////////////////////////////////////////////////////
+// Edge
+//
+// directed edge defined by the two vertices that it connects
+//
 /////////////////////////////////////////////////////////
 class Edge {
 public:
-	Edge(Vertex* firstVert, Vertex* secondVert)
-	:_firstVert(firstVert), _secondVert(secondVert)
+	Edge(Vertex* firstVert, Vertex* secondVert, ConstraintType constraint)
+	:_firstVert(firstVert), _secondVert(secondVert), _constraint(constraint)
 	{}
 	
 // data
+// the edge connects _firstVert and _secondVert
+//
+    ConstraintType _constraint;
 	Vertex* _firstVert;
 	Vertex* _secondVert;
 };
 
+/////////////////////////////////////////////////////////
+// AdjEntry
+//
 /////////////////////////////////////////////////////////
 struct AdjEntry {
     Vertex* _neighbor;
@@ -27,6 +46,11 @@ struct AdjEntry {
     list<AdjEntry>::iterator _reverseEdge;
 };
 
+/////////////////////////////////////////////////////////
+// VertAdjList
+//
+// list of all vertices connected to _center
+//
 /////////////////////////////////////////////////////////
 class VertAdjList {
 public:
@@ -48,6 +72,12 @@ ostream& operator << (ostream& os, VertAdjList& v);
 
 
 /////////////////////////////////////////////////////////
+// Vertex
+//
+// a vertex, which has an adjacency list so we can see
+// all the other vertices to which it is connected
+//
+/////////////////////////////////////////////////////////
 class Vertex {
 public:
     Vertex(int label)
@@ -66,6 +96,7 @@ public:
     // data
     VertAdjList _adjList;
     int _label; // we will assume that labels are also the index into the vertex arrays
+    
     int _color;
     bool _colorKnown;
     bool _searchFlag;	
