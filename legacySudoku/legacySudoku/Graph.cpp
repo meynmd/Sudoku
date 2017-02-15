@@ -95,18 +95,29 @@ pair<int, bool> Graph::nineColorCompletion(bool printSolution, bool printProcess
 		
 		cout << "|" << endl << "|-----------------------|" << endl;
 	}
+	
 	return pair<int, bool>(backtracks, success);
 }
 
+/////////////////////////////////////////////////////////
+//
+// nineColorCompletionHelper
+//
+// the recursive part...
+//
+/////////////////////////////////////////////////////////
 bool Graph::nineColorCompletionHelper(
-										int* backtracks,
-										Coloring partialColoring,
-										Vertex* lastColoredVert,
-										int lastColor,
-										bool printProcess)
-{	
+							int* backtracks,
+							Coloring partialColoring,
+							Vertex* lastColoredVert,
+							int lastColor,
+							bool printProcess
+){
+	// try to assign lastColor to lastColoredVert
 	if(!partialColoring.assignColor(lastColoredVert, lastColor))
 		return false;
+	
+	// if all vertices have been colored, we're done
 	if(partialColoring.numLeftToColor() == 0)
 		return true;
     
@@ -140,8 +151,11 @@ bool Graph::nineColorCompletionHelper(
 	list<int>::iterator listIter = currColorList.begin();
 	for(; listIter != currColorList.end(); ++listIter)
 	{
-		if(nineColorCompletionHelper(backtracks, partialColoring, currVert, (*listIter), printProcess))
+		if(nineColorCompletionHelper(
+				backtracks, partialColoring, currVert, (*listIter), printProcess))
+		{
 			return true;
+		}
 		++(*backtracks);
 	}
 	

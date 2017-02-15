@@ -38,6 +38,13 @@ Coloring::Coloring(const Graph& g)
 		}
 }
 
+/////////////////////////////////////////////////////////
+//
+// pickVertToColor
+//
+// I think this is where the heuristic goes, right? --Matt
+//
+/////////////////////////////////////////////////////////
 pair<Vertex*, list<int> > Coloring::pickVertToColor()
 {
 	// search strategy one: pick the vertex with the smallest list
@@ -56,6 +63,26 @@ pair<Vertex*, list<int> > Coloring::pickVertToColor()
 	return result;
 }
 
+/////////////////////////////////////////////////////////
+//
+// assignColor
+//
+// this method implements Rule 3. We try to color a vertex
+// with the requested color, returning true if it is
+// --what, arc consistent with all connected vertices?
+// false otherwise
+//
+// inputs:
+//
+//		vert		Vertex*			vertex to color
+//		color		int				requested color 1-9 ?
+//
+//	output:
+//		true if successful, false otherwise
+//
+//	side effects?
+//
+/////////////////////////////////////////////////////////
 bool Coloring::assignColor(Vertex* vert, int color)
 {
     
@@ -63,9 +90,9 @@ bool Coloring::assignColor(Vertex* vert, int color)
     // domain HERE - UNION of neighbors by each constraint type.
     // To implement this, we will need to label edges with column, box, row constraint type
     // We need to be able to union domains, and set difference, and intersect
-
     
 	// actually change the graph model
+	
 	vert->_color = color;
 	
 	// the vertex is colored, remove it from the map 
