@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		34EF3B3C1E54DD85004CFA69 /* setOps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34EF3B3A1E54DD85004CFA69 /* setOps.cpp */; };
 		CCCE2A821E5153E20038AC2A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCCE2A811E5153E20038AC2A /* main.cpp */; };
 		CCCE2AA01E515D320038AC2A /* GraphDataStructures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCCE2A991E515D320038AC2A /* GraphDataStructures.cpp */; };
 		CCCE2AA11E515D320038AC2A /* Coloring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCCE2A9A1E515D320038AC2A /* Coloring.cpp */; };
@@ -28,8 +27,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		34EF3B3A1E54DD85004CFA69 /* setOps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setOps.cpp; sourceTree = "<group>"; };
-		34EF3B3B1E54DD85004CFA69 /* setOps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setOps.h; sourceTree = "<group>"; };
 		CCCE2A7E1E5153E10038AC2A /* legacySudoku */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = legacySudoku; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCE2A811E5153E20038AC2A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CCCE2A931E515D320038AC2A /* Coloring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coloring.h; sourceTree = "<group>"; };
@@ -81,8 +78,6 @@
 				CCCE2A9B1E515D320038AC2A /* Graph.cpp */,
 				CCCE2A9C1E515D320038AC2A /* GraphFactory.cpp */,
 				CCCE2A811E5153E20038AC2A /* main.cpp */,
-				34EF3B3A1E54DD85004CFA69 /* setOps.cpp */,
-				34EF3B3B1E54DD85004CFA69 /* setOps.h */,
 			);
 			path = legacySudoku;
 			sourceTree = "<group>";
@@ -144,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCCE2AA31E515D320038AC2A /* GraphFactory.cpp in Sources */,
-				34EF3B3C1E54DD85004CFA69 /* setOps.cpp in Sources */,
 				CCCE2AA21E515D320038AC2A /* Graph.cpp in Sources */,
 				CCCE2A821E5153E20038AC2A /* main.cpp in Sources */,
 				CCCE2AA01E515D320038AC2A /* GraphDataStructures.cpp in Sources */,

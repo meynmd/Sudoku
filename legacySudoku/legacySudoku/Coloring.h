@@ -21,9 +21,9 @@ public:
     list<int> rowConstraintUnion(Vertex* v);
     list<int> colConstraintUnion(Vertex* v);
     
-    list<int> intersectDomains(const list<int>& domainA, const list<int>& domainB);
-    
-    list<int> setDifference(const list<int>& domainA, const list<int>& domainB);
+	template <class T> list<T> unionDomains(const list<T>& a, const list<T>& b);
+	template <class T> list<T> intersectDomains(const list<T>& a, const list<T>& b);
+    template <class T> list<T> setDifference(const list<T>& domainA, const list<T>& domainB);
 
 
 private:

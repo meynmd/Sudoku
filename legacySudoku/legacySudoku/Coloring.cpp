@@ -157,17 +157,69 @@ list<int> Coloring::colConstraintUnion(Vertex* v)
     return list<int>();
 }
 
-list<int> Coloring::intersectDomains(const list<int>& domainA, const list<int>& domainB)
+template <class T>
+list<T> Coloring::unionDomains(const list<T>& a, const list<T>& b)
 {
-    //FIXME write this function
-    return list<int>();
+	list<T> c;
+	
+	auto i = a.begin();
+	for(; i != a.end(); i++)
+	{
+		c.insert(*i);
+	}
+	
+	for(i = b.begin(); i != b.end(); i++)
+	{
+		c.insert(*i);
+	}
+	
+	return c;
+
 }
 
-list<int> Coloring::setDifference(const list<int>& domainA, const list<int>& domainB)
+template <class T>
+list<T> Coloring::intersectDomains(const list<T>& a, const list<T>& b)
 {
-    //FIXME write this function
-    return list<int>();
+	list<T> c;
+	
+	for (auto i = a.begin(); i != a.end(); i++)
+	{
+		T query = *i;
+		for (auto j = b.begin(); j != b.end(); j++)
+		{
+			if (query == *j)
+				c.push_back(query);
+		}
+	}
+	return c;
 }
+
+
+template <class T>
+list<T> Coloring::setDifference(const list<T>& a, const list<T>& b)
+{
+	list<T> c;
+	
+	for(auto i = a.begin(); i != a.end(); i++)
+	{
+		T query = *i;
+		bool found = false;
+		for (auto j = b.begin(); j != b.end(); j++)
+		{
+			if (query == *j)
+			{
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			c.push_back(query);
+		}
+	}
+	return c;
+}
+
 
 ostream& operator << (ostream& os, Coloring& c)
 {

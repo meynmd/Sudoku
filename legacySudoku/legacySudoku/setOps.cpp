@@ -14,12 +14,12 @@ set<T> takeUnion(set<T> a, set<T> b)
 	auto i = a.begin();
 	for(; i != a.end(); i++)
 	{
-		c.add(*i);
+		c.insert(*i);
 	}
 	
 	for(i = b.begin(); i != b.end(); i++)
 	{
-		c.add(*i);
+		c.insert(*i);
 	}
 	
 	return c;

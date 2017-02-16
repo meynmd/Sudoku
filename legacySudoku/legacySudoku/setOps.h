@@ -1,13 +1,15 @@
 //
-//  setOps.hpp
+//  setOps.h
 //
 
-#ifndef setOps_hpp
-#define setOps_hpp
+#ifndef setOps_h
+#define setOps_h
 
 #include <set>
+
 
 template <class T>
 std::set<T> takeUnion(std::set<T> a, std::set<T> b);
 
-#endif /* setOps_hpp */
+
+#endif /* setOps_h */
