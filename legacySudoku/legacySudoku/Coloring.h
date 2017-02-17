@@ -15,11 +15,11 @@ public:
 	int numLeftToColor() {return (int)_toColor.size();}
 	
 	pair<Vertex*, list<int> > pickVertToColor();
-	bool assignColor(Vertex* vert, int color);
+	bool assignColor(Vertex* vert, int color, Graph* g);
     
-    list<int> boxConstraintUnion(Vertex* v);
-    list<int> rowConstraintUnion(Vertex* v);
-    list<int> colConstraintUnion(Vertex* v);
+    list<int> boxConstraintUnion(Vertex* v, Graph* g);
+    list<int> rowConstraintUnion(Vertex* v, Graph* g);
+    list<int> colConstraintUnion(Vertex* v, Graph* g);
     
 	template <class T> list<T> unionDomains(const list<T>& a, const list<T>& b);
 	template <class T> list<T> intersectDomains(const list<T>& a, const list<T>& b);

@@ -2,6 +2,7 @@
 // ------------------ Coloring.cpp -----------------------
 //
 #include "Coloring.h"
+#include <set>
 
 Coloring::Coloring(const Graph& g)
 {
@@ -83,7 +84,7 @@ pair<Vertex*, list<int> > Coloring::pickVertToColor()
 //	side effects?
 //
 /////////////////////////////////////////////////////////
-bool Coloring::assignColor(Vertex* vert, int color)
+bool Coloring::assignColor(Vertex* vert, int color, Graph* g)
 {
     
      // RULE 3 To implement this, we want to compute set difference of
@@ -114,13 +115,13 @@ bool Coloring::assignColor(Vertex* vert, int color)
 
             // RULE 2 goes here, if size == 1, assign
             if(_toColor[neighborVert].size() == 1)
-                if(!assignColor(neighborVert,_toColor[neighborVert].front()))
+                if(!assignColor(neighborVert,_toColor[neighborVert].front(), g))
                     return false;
             
-            // RULE 3 goes here, we can reason by process of elimination that a variable is bound by its context
-            list<int> boxDomainsU = boxConstraintUnion(neighborVert);
-            list<int> rowDomainsU = rowConstraintUnion(neighborVert);
-            list<int> colDomainsU = colConstraintUnion(neighborVert);
+            // RULE 3: we can reason by process of elimination that a variable is bound by its context
+            list<int> boxDomainsU = boxConstraintUnion(neighborVert, g);
+            list<int> rowDomainsU = rowConstraintUnion(neighborVert, g);
+            list<int> colDomainsU = colConstraintUnion(neighborVert, g);
             list<int> boxRemainingColors = setDifference(_toColor[neighborVert], boxDomainsU);
             list<int> rowRemainingColors = setDifference(_toColor[neighborVert], rowDomainsU);
             list<int> colRemainingColors = setDifference(_toColor[neighborVert], colDomainsU);
@@ -128,7 +129,7 @@ bool Coloring::assignColor(Vertex* vert, int color)
             if(finalRemainingColors.empty())
                 return false;
             if(finalRemainingColors.size() == 1)
-                if(!assignColor(neighborVert, finalRemainingColors.front()))
+                if(!assignColor(neighborVert, finalRemainingColors.front(), g))
                     return false;
             
 			// if we just removed the last potential color, 
@@ -141,20 +142,89 @@ bool Coloring::assignColor(Vertex* vert, int color)
 	return true;
 }
 
-list<int> Coloring::boxConstraintUnion(Vertex* v)
+list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 {
-    //FIXME write this function
-    return list<int>();
+	set<int> boxUnion;
+	
+	// we are interested in the third of the columns and the third of the rows
+	// that form this vertex's box
+	int row = 3 * (v->row / 3);
+	int col = 3 * (v->col / 3);
+	int lastRow = row + 2, lastCol = col + 2;
+	
+	for(; row <= lastRow; row++)
+	{
+		for(; col <= lastCol; col++)
+		{
+			if(row == v->row && col == v->col)
+			{
+				continue;
+			}
+			int idx = 9 * row + col;
+			boxUnion.insert(g->_vertexSet[idx]->_color);
+		}
+	}
+	
+	// convert to list
+	list<int> result;
+	for(auto i = boxUnion.begin(); i != boxUnion.end(); i++)
+	{
+		result.push_back(*i);
+	}
+	
+    return result;
 }
-list<int> Coloring::rowConstraintUnion(Vertex* v)
+list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 {
-    //FIXME write this function
-    return list<int>();
+	set<int> rowUnion;
+	
+	// we are interested in the vertices in the same row
+	int row = v->row;
+	int col = v->col;
+	
+	for(; col < 9; col++)
+	{
+		if(col == v->col)
+		{
+			continue;
+		}
+		rowUnion.insert(g->_vertexSet[9 * row + col]->_color);
+	}
+	
+	// convert to list
+	list<int> result;
+	for(auto i = rowUnion.begin(); i != rowUnion.end(); i++)
+	{
+		result.push_back(*i);
+	}
+	
+    return result;
 }
-list<int> Coloring::colConstraintUnion(Vertex* v)
+list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 {
-    //FIXME write this function
-    return list<int>();
+	set<int> colUnion;
+	
+	// we are interested in the vertices in the same row
+	int row = v->row;
+	int col = v->col;
+	
+	for(; row < 9; row++)
+	{
+		if(row == v->row)
+		{
+			continue;
+		}
+		colUnion.insert(g->_vertexSet[9 * row + col]->_color);
+	}
+	
+	// convert to list
+	list<int> result;
+	for(auto i = colUnion.begin(); i != colUnion.end(); i++)
+	{
+		result.push_back(*i);
+	}
+	
+    return result;
 }
 
 template <class T>

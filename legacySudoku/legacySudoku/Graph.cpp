@@ -114,7 +114,7 @@ bool Graph::nineColorCompletionHelper(
 							bool printProcess
 ){
 	// try to assign lastColor to lastColoredVert
-	if(!partialColoring.assignColor(lastColoredVert, lastColor))
+	if(!partialColoring.assignColor(lastColoredVert, lastColor, this))
 		return false;
 	
 	// if all vertices have been colored, we're done

@@ -99,5 +99,6 @@ public:
     
     int _color;
     bool _colorKnown;
-    bool _searchFlag;	
+    bool _searchFlag;
+	int row, col;
 };

@@ -66,7 +66,7 @@ void multiTestSudoku()
 
 int main (int argc, char* argv[]) 
 {
-    singleTestSudoku();
-    //multiTestSudoku();
+    //singleTestSudoku();
+    multiTestSudoku();
 	
 }

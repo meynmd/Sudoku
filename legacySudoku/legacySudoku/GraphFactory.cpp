@@ -224,6 +224,9 @@ Graph GraphFactory::createSudokuGraph(int listIdx, string* difficulty)
 		// color 0 means not yet set
 		if(color != 0)
 			g._vertexSet.back()->_colorKnown = true;
+		
+		g._vertexSet.back()->row = i / 9;
+		g._vertexSet.back()->col = i % 9;
 	}
 	
 	// edge for every pair of verts participating in alldiff constraint
