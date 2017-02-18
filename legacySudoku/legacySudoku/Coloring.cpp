@@ -148,20 +148,23 @@ list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 	
 	// we are interested in the third of the columns and the third of the rows
 	// that form this vertex's box
-	int row = 3 * (v->row / 3);
-	int col = 3 * (v->col / 3);
-	int lastRow = row + 2, lastCol = col + 2;
+	int firstRow = 3 * (v->row / 3), firstCol = 3 * (v->col / 3);
+	int lastRow = firstRow + 2, lastCol = firstCol + 2;
 	
-	for(; row <= lastRow; row++)
+	for(int row = firstRow; row <= lastRow; row++)
 	{
-		for(; col <= lastCol; col++)
+		for(int col = firstCol; col <= lastCol; col++)
 		{
 			if(row == v->row && col == v->col)
 			{
 				continue;
 			}
-			int idx = 9 * row + col;
-			boxUnion.insert(g->_vertexSet[idx]->_color);
+			
+			int c = g->_vertexSet[9 * row + col]->_color;
+			if(c != 0)
+			{
+				boxUnion.insert(c);
+			}
 		}
 	}
 	
@@ -172,8 +175,17 @@ list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 		result.push_back(*i);
 	}
 	
+	printf("Vertex (%d, %d)\n\tBox Constraints Union:\n\t", v->col, v->row);
+	for(auto i = result.begin(); i != result.end(); i++)
+	{
+		printf("%d\t", *i);
+	}
+	printf("\n\n");
+	
     return result;
 }
+
+
 list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 {
 	set<int> rowUnion;
@@ -182,13 +194,18 @@ list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 	int row = v->row;
 	int col = v->col;
 	
-	for(; col < 9; col++)
+	for(col = 0; col < 9; col++)
 	{
 		if(col == v->col)
 		{
 			continue;
 		}
-		rowUnion.insert(g->_vertexSet[9 * row + col]->_color);
+		
+		int c = g->_vertexSet[9 * row + col]->_color;
+		if(c != 0)
+		{
+			rowUnion.insert(c);
+		}
 	}
 	
 	// convert to list
@@ -197,6 +214,13 @@ list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 	{
 		result.push_back(*i);
 	}
+		
+	printf("Vertex (%d, %d)\n\tRow Constraints Union:\n\t", v->col, v->row);
+	for(auto i = result.begin(); i != result.end(); i++)
+	{
+		printf("%d\t", *i);
+	}
+	printf("\n\n");
 	
     return result;
 }
@@ -208,13 +232,18 @@ list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 	int row = v->row;
 	int col = v->col;
 	
-	for(; row < 9; row++)
+	for(row = 0; row < 9; row++)
 	{
 		if(row == v->row)
 		{
 			continue;
 		}
-		colUnion.insert(g->_vertexSet[9 * row + col]->_color);
+		
+		int c = g->_vertexSet[9 * row + col]->_color;
+		if(c != 0)
+		{
+			colUnion.insert(c);
+		}
 	}
 	
 	// convert to list
@@ -223,6 +252,13 @@ list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 	{
 		result.push_back(*i);
 	}
+		
+	printf("Vertex (%d, %d)\n\tColumn Constraints Union:\n\t", v->col, v->row);
+	for(auto i = result.begin(); i != result.end(); i++)
+	{
+		printf("%d\t", *i);
+	}
+	printf("\n\n");
 	
     return result;
 }

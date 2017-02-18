@@ -11,7 +11,7 @@ using namespace std;
 void singleTestSudoku()
 {
 	string difficulty = "";
-	int singleTestIdx = 12;
+	int singleTestIdx = 0; //12
 	
 	// initialize factory with our sudoku problems
 	GraphFactory factory(true, (char[]){ "evenMoreConsistent.txt" });
@@ -66,7 +66,7 @@ void multiTestSudoku()
 
 int main (int argc, char* argv[]) 
 {
-    //singleTestSudoku();
-    multiTestSudoku();
+    singleTestSudoku();
+    //multiTestSudoku();
 	
 }
