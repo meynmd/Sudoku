@@ -96,6 +96,8 @@ bool Coloring::assignColor(Vertex* vert, int color, Graph* g)
 	
 	vert->_color = color;
 	
+	printf("Coloring vertex (%d, %d): %d\n\n", vert->col, vert->row, color);
+	
 	// the vertex is colored, remove it from the map 
 	_toColor.erase(vert);
 
@@ -126,6 +128,14 @@ bool Coloring::assignColor(Vertex* vert, int color, Graph* g)
             list<int> rowRemainingColors = setDifference(_toColor[neighborVert], rowDomainsU);
             list<int> colRemainingColors = setDifference(_toColor[neighborVert], colDomainsU);
             list<int> finalRemainingColors = intersectDomains(boxRemainingColors, intersectDomains(rowRemainingColors, colRemainingColors));
+			
+			printf("finalRemainingColors: for (%d, %d)\n", neighborVert->col, neighborVert->row);
+			for(auto i = finalRemainingColors.begin(); i != finalRemainingColors.end(); i++)
+			{
+				printf("\t%d", *i);
+			}
+			printf("\n\n");
+			
             if(finalRemainingColors.empty())
                 return false;
             if(finalRemainingColors.size() == 1)
@@ -146,11 +156,10 @@ list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 {
 	set<int> boxUnion;
 	
-	// we are interested in the third of the columns and the third of the rows
-	// that form this vertex's box
 	int firstRow = 3 * (v->row / 3), firstCol = 3 * (v->col / 3);
 	int lastRow = firstRow + 2, lastCol = firstCol + 2;
 	
+	// get constraints from the graph
 	for(int row = firstRow; row <= lastRow; row++)
 	{
 		for(int col = firstCol; col <= lastCol; col++)
@@ -167,6 +176,26 @@ list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 			}
 		}
 	}
+	
+	// or should we use _toColor instead of graph? Or both?
+	/*
+	for(auto i = _toColor.begin(); i != _toColor.end(); i++)
+	{
+		int row = i->first->row, col = i->first->col;
+		if (row == v->row && col == v->col)
+			continue;
+		
+		// see if this vertex is in the same box
+		if (row >= firstRow && row <= lastRow && col >= firstCol && col <= lastCol)
+		{
+			int c = i->first->_color;
+			if(c != 0)
+			{
+				boxUnion.insert(c);
+			}
+		}
+	}
+	*/
 	
 	// convert to list
 	list<int> result;
@@ -194,6 +223,7 @@ list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 	int row = v->row;
 	int col = v->col;
 	
+	// check the graph
 	for(col = 0; col < 9; col++)
 	{
 		if(col == v->col)
@@ -207,6 +237,21 @@ list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 			rowUnion.insert(c);
 		}
 	}
+	
+	// use coloring instead of graph? Or both?
+	/*
+	for(auto i = _toColor.begin(); i != _toColor.end(); i++)
+	{
+		if (i->first->row == v->row && i->first->col != v->col)
+		{
+			int c = i->first->_color;
+			if(c != 0)
+			{
+				rowUnion.insert(c);
+			}
+		}
+	}
+	*/
 	
 	// convert to list
 	list<int> result;
@@ -229,9 +274,11 @@ list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 	set<int> colUnion;
 	
 	// we are interested in the vertices in the same row
+	
 	int row = v->row;
 	int col = v->col;
 	
+	// search graph
 	for(row = 0; row < 9; row++)
 	{
 		if(row == v->row)
@@ -245,6 +292,22 @@ list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 			colUnion.insert(c);
 		}
 	}
+	
+	
+	// use coloring instead of graph?
+	/*
+	for(auto i = _toColor.begin(); i != _toColor.end(); i++)
+	{
+		if (i->first->col == v->col && i->first->row != v->row)
+		{
+			int c = i->first->_color;
+			if(c != 0)
+			{
+				colUnion.insert(c);
+			}
+		}
+	}
+	*/
 	
 	// convert to list
 	list<int> result;
