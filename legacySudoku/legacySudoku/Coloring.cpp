@@ -159,7 +159,8 @@ list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 	int firstRow = 3 * (v->row / 3), firstCol = 3 * (v->col / 3);
 	int lastRow = firstRow + 2, lastCol = firstCol + 2;
 	
-	// get constraints from the graph
+	// don't get constraints from the graph
+	/*
 	for(int row = firstRow; row <= lastRow; row++)
 	{
 		for(int col = firstCol; col <= lastCol; col++)
@@ -176,9 +177,8 @@ list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 			}
 		}
 	}
-	
+	*/
 	// or should we use _toColor instead of graph? Or both?
-	/*
 	for(auto i = _toColor.begin(); i != _toColor.end(); i++)
 	{
 		int row = i->first->row, col = i->first->col;
@@ -195,7 +195,7 @@ list<int> Coloring::boxConstraintUnion(Vertex* v, Graph* g)
 			}
 		}
 	}
-	*/
+	
 	
 	// convert to list
 	list<int> result;
@@ -223,7 +223,8 @@ list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 	int row = v->row;
 	int col = v->col;
 	
-	// check the graph
+	// don't check the graph
+	/*
 	for(col = 0; col < 9; col++)
 	{
 		if(col == v->col)
@@ -237,9 +238,9 @@ list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 			rowUnion.insert(c);
 		}
 	}
+	*/
 	
-	// use coloring instead of graph? Or both?
-	/*
+	// search coloring instead of graph? Or both?
 	for(auto i = _toColor.begin(); i != _toColor.end(); i++)
 	{
 		if (i->first->row == v->row && i->first->col != v->col)
@@ -251,7 +252,7 @@ list<int> Coloring::rowConstraintUnion(Vertex* v, Graph* g)
 			}
 		}
 	}
-	*/
+	
 	
 	// convert to list
 	list<int> result;
@@ -278,7 +279,8 @@ list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 	int row = v->row;
 	int col = v->col;
 	
-	// search graph
+	// don't search graph
+	/*
 	for(row = 0; row < 9; row++)
 	{
 		if(row == v->row)
@@ -292,10 +294,10 @@ list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 			colUnion.insert(c);
 		}
 	}
+	*/
 	
+	// use coloring instead of graph
 	
-	// use coloring instead of graph?
-	/*
 	for(auto i = _toColor.begin(); i != _toColor.end(); i++)
 	{
 		if (i->first->col == v->col && i->first->row != v->row)
@@ -307,7 +309,7 @@ list<int> Coloring::colConstraintUnion(Vertex* v, Graph* g)
 			}
 		}
 	}
-	*/
+	
 	
 	// convert to list
 	list<int> result;
